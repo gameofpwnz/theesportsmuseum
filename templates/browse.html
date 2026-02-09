@@ -14,33 +14,33 @@
         <div class="filter-group">
             <label class="filter-label">Category</label>
             <div class="filter-buttons">
-                <a href="/browse/" class="filter-chip {% if category == 'all' %}active{% endif %}">All</a>
-                <a href="/browse/category-jerseys/" class="filter-chip {% if category == 'jerseys' %}active{% endif %}">Jerseys</a>
-                <a href="/browse/category-hardware/" class="filter-chip {% if category == 'hardware' %}active{% endif %}">Hardware</a>
-                <a href="/browse/category-signatures/" class="filter-chip {% if category == 'signatures' %}active{% endif %}">Signatures</a>
+                <a href="browse/" class="filter-chip {% if category == 'all' %}active{% endif %}">All</a>
+                <a href="browse/category-jerseys/" class="filter-chip {% if category == 'jerseys' %}active{% endif %}">Jerseys</a>
+                <a href="browse/category-hardware/" class="filter-chip {% if category == 'hardware' %}active{% endif %}">Hardware</a>
+                <a href="browse/category-signatures/" class="filter-chip {% if category == 'signatures' %}active{% endif %}">Signatures</a>
             </div>
         </div>
         
         <div class="filter-group">
             <label class="filter-label">Esport</label>
             <div class="filter-buttons">
-                <a href="/browse/" class="filter-chip {% if esport == 'all' %}active{% endif %}">All</a>
-                <a href="/browse/esport-cod/" class="filter-chip {% if esport == 'cod' %}active{% endif %}">CoD</a>
-                <a href="/browse/esport-halo/" class="filter-chip {% if esport == 'halo' %}active{% endif %}">Halo</a>
-                <a href="/browse/esport-cs/" class="filter-chip {% if esport == 'cs' %}active{% endif %}">CS</a>
-                <a href="/browse/esport-valorant/" class="filter-chip {% if esport == 'valorant' %}active{% endif %}">Valorant</a>
-                <a href="/browse/esport-lol/" class="filter-chip {% if esport == 'lol' %}active{% endif %}">LoL</a>
-                <a href="/browse/esport-rl/" class="filter-chip {% if esport == 'rl' %}active{% endif %}">RL</a>
+                <a href="browse/" class="filter-chip {% if esport == 'all' %}active{% endif %}">All</a>
+                <a href="browse/esport-cod/" class="filter-chip {% if esport == 'cod' %}active{% endif %}">CoD</a>
+                <a href="browse/esport-halo/" class="filter-chip {% if esport == 'halo' %}active{% endif %}">Halo</a>
+                <a href="browse/esport-cs/" class="filter-chip {% if esport == 'cs' %}active{% endif %}">CS</a>
+                <a href="browse/esport-valorant/" class="filter-chip {% if esport == 'valorant' %}active{% endif %}">Valorant</a>
+                <a href="browse/esport-lol/" class="filter-chip {% if esport == 'lol' %}active{% endif %}">LoL</a>
+                <a href="browse/esport-rl/" class="filter-chip {% if esport == 'rl' %}active{% endif %}">RL</a>
             </div>
         </div>
         
         <div class="filter-group">
             <label class="filter-label">Era</label>
             <div class="filter-buttons">
-                <a href="/browse/" class="filter-chip {% if era == 'all' %}active{% endif %}">All Eras</a>
-                <a href="/browse/era-golden/" class="filter-chip {% if era == 'golden' %}active{% endif %}">Golden Age (≤2015)</a>
-                <a href="/browse/era-global/" class="filter-chip {% if era == 'global' %}active{% endif %}">Global Era (2016-2020)</a>
-                <a href="/browse/era-modern/" class="filter-chip {% if era == 'modern' %}active{% endif %}">Modern (2021+)</a>
+                <a href="browse/" class="filter-chip {% if era == 'all' %}active{% endif %}">All Eras</a>
+                <a href="browse/era-golden/" class="filter-chip {% if era == 'golden' %}active{% endif %}">Golden Age (≤2015)</a>
+                <a href="browse/era-global/" class="filter-chip {% if era == 'global' %}active{% endif %}">Global Era (2016-2020)</a>
+                <a href="browse/era-modern/" class="filter-chip {% if era == 'modern' %}active{% endif %}">Modern (2021+)</a>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
     <div class="browse-grid">
         {% for record in records %}
         <article class="record-card">
-            <a href="/record/{{ record.id }}" class="record-image">
+            <a href="record/{{ record.id }}" class="record-image">
                 {% if record.primary_image %}
                 <img src="{{ record.primary_image }}" alt="{{ record.name }}" loading="lazy">
                 {% else %}
@@ -68,10 +68,10 @@
                 </div>
                 
                 <h3 class="record-title">
-                    <a href="/record/{{ record.id }}">{{ record.name }}</a>
+                    <a href="record/{{ record.id }}">{{ record.name }}</a>
                 </h3>
                 
-                <a href="/steward/{{ record.steward }}" class="record-steward">
+                <a href="steward/{{ record.steward }}" class="record-steward">
                     @{{ record.steward }}
                 </a>
             </div>
@@ -83,7 +83,7 @@
         <div class="no-results-icon">◆</div>
         <h2 class="no-results-title">No Records Found</h2>
         <p class="no-results-desc">Try adjusting your filters to see more results</p>
-        <a href="/browse" class="no-results-button">Clear All Filters</a>
+        <a href="browse" class="no-results-button">Clear All Filters</a>
     </div>
     {% endif %}
 </div>

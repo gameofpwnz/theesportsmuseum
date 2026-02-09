@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Antonio:wght@300;400;700&family=DM+Sans:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="{{ '/static/css/main.css' if '/' in request_path else '../static/css/main.css' }}">
     
     {% block extra_head %}{% endblock %}
 </head>
@@ -17,7 +17,7 @@
     <!-- Sticky Navigation -->
     <nav class="museum-nav">
         <div class="nav-container">
-            <a href="/" class="nav-logo">
+            <a href="../" class="nav-logo">
                 <span class="logo-icon">◆</span>
                 <div class="logo-text">
                     <span class="logo-main">ESPORTS MUSEUM</span>
@@ -39,11 +39,11 @@
             </div>
             
             <div class="nav-links">
-                <a href="/browse/" class="nav-link">Browse</a>
-                <a href="/browse/category-jerseys/" class="nav-link">Jerseys</a>
-                <a href="/browse/category-hardware/" class="nav-link">Hardware</a>
-                <a href="/browse/category-signatures/" class="nav-link">Signatures</a>
-                <a href="/about/" class="nav-link">About</a>
+                <a href="browse/" class="nav-link">Browse</a>
+                <a href="browse/category-jerseys/" class="nav-link">Jerseys</a>
+                <a href="browse/category-hardware/" class="nav-link">Hardware</a>
+                <a href="browse/category-signatures/" class="nav-link">Signatures</a>
+                <a href="about/" class="nav-link">About</a>
                 <a href="https://forms.gle/hrbaadeGTpLCaeYj7" target="_blank" class="nav-cta">Submit Record</a>
             </div>
             
@@ -56,11 +56,11 @@
         
         <!-- Mobile Menu -->
         <div class="mobile-menu" id="mobileMenu">
-            <a href="/browse/" class="mobile-link">Browse All</a>
-            <a href="/browse/category-jerseys/" class="mobile-link">Jerseys</a>
-            <a href="/browse/category-hardware/" class="mobile-link">Hardware</a>
-            <a href="/browse/category-signatures/" class="mobile-link">Signatures</a>
-            <a href="/about/" class="mobile-link">About</a>
+            <a href="browse/" class="mobile-link">Browse All</a>
+            <a href="browse/category-jerseys/" class="mobile-link">Jerseys</a>
+            <a href="browse/category-hardware/" class="mobile-link">Hardware</a>
+            <a href="browse/category-signatures/" class="mobile-link">Signatures</a>
+            <a href="about/" class="mobile-link">About</a>
             <a href="https://forms.gle/hrbaadeGTpLCaeYj7" target="_blank" class="mobile-link-cta">Submit Record</a>
         </div>
     </nav>
@@ -79,8 +79,8 @@
             <div class="footer-section">
                 <h3 class="footer-title">Museum</h3>
                 <div class="footer-links">
-                    <a href="/browse/">Browse Collection</a>
-                    <a href="/about/">About the Archive</a>
+                    <a href="browse/">Browse Collection</a>
+                    <a href="about/">About the Archive</a>
                     <a href="https://forms.gle/hrbaadeGTpLCaeYj7" target="_blank">Submit Record</a>
                 </div>
             </div>
@@ -88,9 +88,9 @@
             <div class="footer-section">
                 <h3 class="footer-title">Categories</h3>
                 <div class="footer-links">
-                    <a href="/browse/category-jerseys/">Jerseys</a>
-                    <a href="/browse/category-hardware/">Hardware</a>
-                    <a href="/browse/category-signatures/">Signatures</a>
+                    <a href="browse/category-jerseys/">Jerseys</a>
+                    <a href="browse/category-hardware/">Hardware</a>
+                    <a href="browse/category-signatures/">Signatures</a>
                 </div>
             </div>
             
@@ -107,13 +107,13 @@
                 <div class="sponsor-logos">
                     {% block sponsors %}
                     <div class="sponsor-logo">
-                        <img src="/static/images/sponsor-placeholder.svg" alt="Sponsor 1">
+                        <img src="static/images/sponsor-placeholder.svg" alt="Sponsor 1">
                     </div>
                     <div class="sponsor-logo">
-                        <img src="/static/images/sponsor-placeholder.svg" alt="Sponsor 2">
+                        <img src="static/images/sponsor-placeholder.svg" alt="Sponsor 2">
                     </div>
                     <div class="sponsor-logo">
-                        <img src="/static/images/sponsor-placeholder.svg" alt="Sponsor 3">
+                        <img src="static/images/sponsor-placeholder.svg" alt="Sponsor 3">
                     </div>
                     {% endblock %}
                 </div>
@@ -125,7 +125,7 @@
         </div>
     </footer>
     
-    <script src="/static/js/main.js"></script>
+    <script src="static/js/main.js"></script>
     {% block extra_scripts %}{% endblock %}
 </body>
 </html>

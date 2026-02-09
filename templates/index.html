@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block extra_head %}
+<!-- Override paths for root index.html -->
+<link rel="stylesheet" href="static/css/main.css">
+{% endblock %}
+
 {% block title %}Home - Esports Collectors Museum{% endblock %}
 
 {% block content %}
@@ -30,7 +35,7 @@
                 <span class="stat-label">Earliest</span>
             </div>
         </div>
-        <a href="/browse" class="hero-cta">
+        <a href="browse" class="hero-cta">
             Explore Collection
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -51,7 +56,7 @@
     <div class="featured-grid">
         {% for record in featured %}
         <article class="featured-card">
-            <a href="/record/{{ record.id }}" class="featured-image">
+            <a href="record/{{ record.id }}" class="featured-image">
                 {% if record.primary_image %}
                 <img src="{{ record.primary_image }}" alt="{{ record.name }}" loading="lazy">
                 {% else %}
@@ -74,7 +79,7 @@
                 </div>
                 
                 <h3 class="featured-title">
-                    <a href="/record/{{ record.id }}">{{ record.name }}</a>
+                    <a href="record/{{ record.id }}">{{ record.name }}</a>
                 </h3>
                 
                 {% if record.description %}
@@ -82,14 +87,14 @@
                 {% endif %}
                 
                 <div class="featured-footer">
-                    <a href="/steward/{{ record.steward }}" class="steward-link">
+                    <a href="steward/{{ record.steward }}" class="steward-link">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                             <circle cx="12" cy="7" r="4"/>
                         </svg>
                         {{ record.steward }}
                     </a>
-                    <a href="/record/{{ record.id }}" class="view-link">
+                    <a href="record/{{ record.id }}" class="view-link">
                         View Record →
                     </a>
                 </div>
@@ -104,13 +109,13 @@
 <section class="recent-section">
     <div class="section-header">
         <h2 class="section-title">Recent Additions</h2>
-        <a href="/browse" class="section-link">View All →</a>
+        <a href="browse" class="section-link">View All →</a>
     </div>
     
     <div class="recent-grid">
         {% for record in recent %}
         <article class="record-card">
-            <a href="/record/{{ record.id }}" class="record-image">
+            <a href="record/{{ record.id }}" class="record-image">
                 {% if record.primary_image %}
                 <img src="{{ record.primary_image }}" alt="{{ record.name }}" loading="lazy">
                 {% else %}
@@ -128,10 +133,10 @@
                 </div>
                 
                 <h3 class="record-title">
-                    <a href="/record/{{ record.id }}">{{ record.name }}</a>
+                    <a href="record/{{ record.id }}">{{ record.name }}</a>
                 </h3>
                 
-                <a href="/steward/{{ record.steward }}" class="record-steward">
+                <a href="steward/{{ record.steward }}" class="record-steward">
                     @{{ record.steward }}
                 </a>
             </div>
@@ -145,19 +150,19 @@
     <h2 class="section-title">Browse by Category</h2>
     
     <div class="categories-grid">
-        <a href="/browse?category=jerseys" class="category-card">
+        <a href="browse?category=jerseys" class="category-card">
             <div class="category-icon">🎽</div>
             <h3 class="category-title">Jerseys</h3>
             <p class="category-desc">Game-worn apparel from legendary moments</p>
         </a>
         
-        <a href="/browse?category=hardware" class="category-card">
+        <a href="browse?category=hardware" class="category-card">
             <div class="category-icon">🏆</div>
             <h3 class="category-title">Hardware</h3>
             <p class="category-desc">Trophies, medals, and championship gear</p>
         </a>
         
-        <a href="/browse?category=signatures" class="category-card">
+        <a href="browse?category=signatures" class="category-card">
             <div class="category-icon">✍️</div>
             <h3 class="category-title">Signatures</h3>
             <p class="category-desc">Autographed memorabilia from esports icons</p>

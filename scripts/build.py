@@ -125,9 +125,25 @@ class MuseumSiteGenerator:
         
         result = dict(record)
         result['media'] = [dict(m) for m in media]
-        result['badges'] = json.loads(record['badges']) if record['badges'] else []
-        result['tags'] = json.loads(record['tags']) if record['tags'] else []
-        result['chain_of_custody'] = json.loads(record['chain_of_custody']) if record['chain_of_custody'] else []
+        
+        # Handle badges (may or may not exist)
+        try:
+            result['badges'] = json.loads(record['badges']) if record['badges'] else []
+        except (KeyError, IndexError):
+            result['badges'] = []
+        
+        # Handle tags (may or may not exist)
+        try:
+            result['tags'] = json.loads(record['tags']) if record['tags'] else []
+        except (KeyError, IndexError):
+            result['tags'] = []
+        
+        # Handle chain of custody (may or may not exist)
+        try:
+            result['chain_of_custody'] = json.loads(record['chain_of_custody']) if record['chain_of_custody'] else []
+        except (KeyError, IndexError):
+            result['chain_of_custody'] = []
+        
         return result
     
     def get_related_records(self, conn, record_id, game, organization, brand):

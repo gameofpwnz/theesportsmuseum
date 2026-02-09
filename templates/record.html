@@ -6,9 +6,9 @@
 <article class="record-detail">
     <!-- Breadcrumb -->
     <nav class="breadcrumb">
-        <a href="/">Home</a>
+        <a href="">Home</a>
         <span>/</span>
-        <a href="/browse?category={{ record.item_type }}">{{ record.item_type|title }}</a>
+        <a href="browse?category={{ record.item_type }}">{{ record.item_type|title }}</a>
         <span>/</span>
         <span>{{ record.id }}</span>
     </nav>
@@ -124,7 +124,7 @@
             <!-- Steward Info -->
             <div class="steward-info">
                 <h2 class="section-subtitle">Steward</h2>
-                <a href="/steward/{{ record.steward }}" class="steward-card">
+                <a href="steward/{{ record.steward }}" class="steward-card">
                     <div class="steward-avatar">
                         {{ record.steward[0]|upper }}
                     </div>
@@ -316,7 +316,7 @@
         <div class="related-grid">
             {% for rel in related %}
             <article class="record-card">
-                <a href="/record/{{ rel.id }}" class="record-image">
+                <a href="record/{{ rel.id }}" class="record-image">
                     {% if rel.primary_image %}
                     <img src="{{ rel.primary_image }}" alt="{{ rel.name }}" loading="lazy">
                     {% else %}
@@ -334,10 +334,10 @@
                     </div>
                     
                     <h3 class="record-title">
-                        <a href="/record/{{ rel.id }}">{{ rel.name }}</a>
+                        <a href="record/{{ rel.id }}">{{ rel.name }}</a>
                     </h3>
                     
-                    <a href="/steward/{{ rel.steward }}" class="record-steward">
+                    <a href="steward/{{ rel.steward }}" class="record-steward">
                         @{{ rel.steward }}
                     </a>
                 </div>
