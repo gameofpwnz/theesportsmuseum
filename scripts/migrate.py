@@ -55,18 +55,19 @@ def migrate_data(json_file='example-data.json', db_file='museum.db'):
         try:
             # Convert lists to JSON strings
             badges_json = json.dumps(item.get('badges', [])) if item.get('badges') else None
+            tags_json = json.dumps(item.get('tags', [])) if item.get('tags') else None
             custody_json = json.dumps(item.get('chain_of_custody', [])) if item.get('chain_of_custody') else None
             
             # Insert record with new field structure
             cursor.execute("""
                 INSERT INTO records (
                     id, name, organization, brand, game, item_type,
-                    badges, year, steward, steward_link, rarity, 
+                    badges, tags, year, steward, steward_link, rarity, 
                     availability, condition, chain_of_custody,
                     description, notes, verified, verification_date,
                     verification_notes, featured, featured_order, 
                     date_added
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 item.get('id'),
                 item.get('name'),
@@ -75,6 +76,7 @@ def migrate_data(json_file='example-data.json', db_file='museum.db'):
                 item.get('game'),
                 item.get('item_type'),
                 badges_json,
+                tags_json,
                 item.get('year'),
                 item.get('steward'),
                 item.get('steward_link'),

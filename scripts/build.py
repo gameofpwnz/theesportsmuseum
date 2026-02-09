@@ -125,7 +125,9 @@ class MuseumSiteGenerator:
         
         result = dict(record)
         result['media'] = [dict(m) for m in media]
+        result['badges'] = json.loads(record['badges']) if record['badges'] else []
         result['tags'] = json.loads(record['tags']) if record['tags'] else []
+        result['chain_of_custody'] = json.loads(record['chain_of_custody']) if record['chain_of_custody'] else []
         return result
     
     def get_related_records(self, conn, record_id, game, organization, brand):

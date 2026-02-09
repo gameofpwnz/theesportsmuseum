@@ -54,7 +54,7 @@ Complete documentation for all record fields in the Esports Museum database.
 ## Classification & Metadata
 
 ### `badges` (JSON ARRAY, OPTIONAL)
-- **What it is**: Special tags/attributes for the item
+- **What it is**: Visual badges/labels shown on the item (displayed to users)
 - **Format**: JSON array of strings
 - **Examples**:
   ```json
@@ -62,7 +62,7 @@ Complete documentation for all record fields in the Esports Museum database.
   ["Tournament-Used", "MLG", "Limited Edition"]
   ["Prototype", "One-of-a-Kind"]
   ```
-- **Common badges**:
+- **Common badges** (shown as visual badges):
   - `World Champion` - From world championship win
   - `Game-Worn` - Actually worn in competition
   - `Tournament-Used` - Used in tournament
@@ -71,6 +71,26 @@ Complete documentation for all record fields in the Esports Museum database.
   - `Prototype` - Pre-production item
   - `Historical` - Significant historical value
   - `MLG` / `ESL` / `DreamHack` - From specific leagues
+
+### `tags` (JSON ARRAY, OPTIONAL)
+- **What it is**: Keywords for searching/filtering (not displayed as badges)
+- **Format**: JSON array of lowercase strings
+- **Examples**:
+  ```json
+  ["optic", "scump", "cwl", "championship", "green-wall"]
+  ["mlg", "anaheim", "2013", "complexity"]
+  ["final-boss", "ogre2", "halo-2"]
+  ```
+- **Use for**: Player names, event names, nicknames, specific tournaments
+- **Best practices**: 
+  - Keep lowercase
+  - Use hyphens for multi-word tags
+  - Include player nicknames
+  - Add tournament-specific tags
+
+**Badges vs Tags:**
+- **Badges** = Visual labels shown on items (formal, displayed)
+- **Tags** = Search keywords (informal, hidden, for filtering)
 
 ### `year` (INTEGER, OPTIONAL)
 - **What it is**: Year associated with the item

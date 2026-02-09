@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS records (
     
     -- Classification & Metadata
     badges TEXT, -- JSON array: ["World Champion", "Signed", "Game-Worn", "MLG", "Tournament-Used"]
+    tags TEXT,   -- JSON array: ["optic", "scump", "championship", "2017"] - for filtering/searching
     year INTEGER,
     rarity TEXT CHECK(rarity IN ('common', 'uncommon', 'rare', 'very_rare', 'ultra_rare', 'unique', NULL)),
     
@@ -107,6 +108,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS records_fts USING fts5(
     brand,
     game,
     badges,
+    tags,
     notes,
     content=records,
     content_rowid=rowid
@@ -114,8 +116,8 @@ CREATE VIRTUAL TABLE IF NOT EXISTS records_fts USING fts5(
 
 -- Triggers to keep FTS in sync
 CREATE TRIGGER IF NOT EXISTS records_ai AFTER INSERT ON records BEGIN
-    INSERT INTO records_fts(rowid, id, name, description, steward, organization, brand, game, badges, notes)
-    VALUES (new.rowid, new.id, new.name, new.description, new.steward, new.organization, new.brand, new.game, new.badges, new.notes);
+    INSERT INTO records_fts(rowid, id, name, description, steward, organization, brand, game, badges, tags, notes)
+    VALUES (new.rowid, new.id, new.name, new.description, new.steward, new.organization, new.brand, new.game, new.badges, new.tags, new.notes);
 END;
 
 CREATE TRIGGER IF NOT EXISTS records_ad AFTER DELETE ON records BEGIN
@@ -131,6 +133,7 @@ CREATE TRIGGER IF NOT EXISTS records_au AFTER UPDATE ON records BEGIN
         brand = new.brand,
         game = new.game,
         badges = new.badges,
+        tags = new.tags,
         notes = new.notes
     WHERE rowid = new.rowid;
 END;
