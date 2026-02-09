@@ -56,7 +56,7 @@
     <div class="featured-grid">
         {% for record in featured %}
         <article class="featured-card">
-            <a href="record/{{ record.id }}" class="featured-image">
+            <a href="{{ base_path }}record/{{ record.id }}" class="featured-image">
                 {% if record.primary_image %}
                 <img src="{{ record.primary_image }}" alt="{{ record.name }}" loading="lazy">
                 {% else %}
@@ -79,7 +79,7 @@
                 </div>
                 
                 <h3 class="featured-title">
-                    <a href="record/{{ record.id }}">{{ record.name }}</a>
+                    <a href="{{ base_path }}record/{{ record.id }}">{{ record.name }}</a>
                 </h3>
                 
                 {% if record.description %}
@@ -87,14 +87,14 @@
                 {% endif %}
                 
                 <div class="featured-footer">
-                    <a href="steward/{{ record.steward }}" class="steward-link">
+                    <a href="{{ base_path }}steward/{{ record.steward }}" class="steward-link">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                             <circle cx="12" cy="7" r="4"/>
                         </svg>
                         {{ record.steward }}
                     </a>
-                    <a href="record/{{ record.id }}" class="view-link">
+                    <a href="{{ base_path }}record/{{ record.id }}" class="view-link">
                         View Record →
                     </a>
                 </div>
@@ -115,7 +115,7 @@
     <div class="recent-grid">
         {% for record in recent %}
         <article class="record-card">
-            <a href="record/{{ record.id }}" class="record-image">
+            <a href="{{ base_path }}record/{{ record.id }}" class="record-image">
                 {% if record.primary_image %}
                 <img src="{{ record.primary_image }}" alt="{{ record.name }}" loading="lazy">
                 {% else %}
@@ -133,10 +133,10 @@
                 </div>
                 
                 <h3 class="record-title">
-                    <a href="record/{{ record.id }}">{{ record.name }}</a>
+                    <a href="{{ base_path }}record/{{ record.id }}">{{ record.name }}</a>
                 </h3>
                 
-                <a href="steward/{{ record.steward }}" class="record-steward">
+                <a href="{{ base_path }}steward/{{ record.steward }}" class="record-steward">
                     @{{ record.steward }}
                 </a>
             </div>

@@ -124,7 +124,7 @@
             <!-- Steward Info -->
             <div class="steward-info">
                 <h2 class="section-subtitle">Steward</h2>
-                <a href="steward/{{ record.steward }}" class="steward-card">
+                <a href="{{ base_path }}steward/{{ record.steward }}" class="steward-card">
                     <div class="steward-avatar">
                         {{ record.steward[0]|upper }}
                     </div>
@@ -316,7 +316,7 @@
         <div class="related-grid">
             {% for rel in related %}
             <article class="record-card">
-                <a href="record/{{ rel.id }}" class="record-image">
+                <a href="{{ base_path }}record/{{ rel.id }}" class="record-image">
                     {% if rel.primary_image %}
                     <img src="{{ rel.primary_image }}" alt="{{ rel.name }}" loading="lazy">
                     {% else %}
@@ -334,10 +334,10 @@
                     </div>
                     
                     <h3 class="record-title">
-                        <a href="record/{{ rel.id }}">{{ rel.name }}</a>
+                        <a href="{{ base_path }}record/{{ rel.id }}">{{ rel.name }}</a>
                     </h3>
                     
-                    <a href="steward/{{ rel.steward }}" class="record-steward">
+                    <a href="{{ base_path }}steward/{{ rel.steward }}" class="record-steward">
                         @{{ rel.steward }}
                     </a>
                 </div>

@@ -237,7 +237,8 @@ class MuseumSiteGenerator:
         context = {
             'stats': self.get_stats(conn),
             'featured': self.get_featured_records(conn),
-            'recent': self.get_recent_records(conn)
+            'recent': self.get_recent_records(conn),
+            'base_path': ''  # Root level, no prefix
         }
         
         html = template.render(**context)
@@ -261,7 +262,8 @@ class MuseumSiteGenerator:
             'records': self.get_filtered_records(conn),
             'item_type': 'all',
             'game': 'all',
-            'era': 'all'
+            'era': 'all',
+            'base_path': '../'  # One level deep
         }
         html = template.render(**context)
         self.write_file('browse/index.html', html)
@@ -280,7 +282,8 @@ class MuseumSiteGenerator:
                         'records': records,
                         'item_type': item_type,
                         'game': game,
-                        'era': era
+                        'era': era,
+                        'base_path': '../../'  # Two levels deep
                     }
                     
                     html = template.render(**context)
@@ -321,7 +324,8 @@ class MuseumSiteGenerator:
             
             context = {
                 'record': record_data,
-                'related': related
+                'related': related,
+                'base_path': '../../'  # Two levels deep: /record/CE-001/
             }
             
             html = template.render(**context)
@@ -342,7 +346,8 @@ class MuseumSiteGenerator:
             
             context = {
                 'steward': steward_info,
-                'records': records
+                'records': records,
+                'base_path': '../../'  # Two levels deep: /steward/username/
             }
             
             html = template.render(**context)
@@ -355,7 +360,8 @@ class MuseumSiteGenerator:
         print("Generating about page...")
         
         template = self.jinja_env.get_template('about.html')
-        html = template.render()
+        context = {'base_path': '../'}  # One level deep: /about/
+        html = template.render(**context)
         self.write_file('about/index.html', html)
         print("✓ Generated: about/index.html")
     

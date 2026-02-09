@@ -57,7 +57,7 @@
         <div class="collection-grid">
             {% for record in records %}
             <article class="record-card">
-                <a href="record/{{ record.id }}" class="record-image">
+                <a href="{{ base_path }}record/{{ record.id }}" class="record-image">
                     {% if record.primary_image %}
                     <img src="{{ record.primary_image }}" alt="{{ record.name }}" loading="lazy">
                     {% else %}
@@ -75,7 +75,7 @@
                     </div>
                     
                     <h3 class="record-title">
-                        <a href="record/{{ record.id }}">{{ record.name }}</a>
+                        <a href="{{ base_path }}record/{{ record.id }}">{{ record.name }}</a>
                     </h3>
                     
                     {% if record.year %}
