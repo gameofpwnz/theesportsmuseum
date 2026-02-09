@@ -307,7 +307,7 @@ class MuseumSiteGenerator:
             }
             
             html = template.render(**context)
-            self.write_file(f"record/{record['id']}/index.html', html)
+            self.write_file(f"record/{record['id']}/index.html", html)
         
         print(f"✓ Generated {len(records)} record pages")
     
