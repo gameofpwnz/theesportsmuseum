@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ record.title }} - Esports Collectors Museum{% endblock %}
+{% block title %}{{ record.name }} - Esports Collectors Museum{% endblock %}
 
 {% block content %}
 <article class="record-detail">
@@ -8,7 +8,7 @@
     <nav class="breadcrumb">
         <a href="/">Home</a>
         <span>/</span>
-        <a href="/browse?category={{ record.category }}">{{ record.category|title }}</a>
+        <a href="/browse?category={{ record.item_type }}">{{ record.item_type|title }}</a>
         <span>/</span>
         <span>{{ record.id }}</span>
     </nav>
@@ -20,7 +20,7 @@
                 <div class="gallery-main">
                     {% set primary = record.media|selectattr('is_primary')|first or record.media[0] %}
                     {% if primary.type == 'image' %}
-                        <img id="mainImage" src="{{ primary.url }}" alt="{{ record.title }}" class="gallery-image">
+                        <img id="mainImage" src="{{ primary.url }}" alt="{{ record.name }}" class="gallery-image">
                     {% elif primary.type == 'youtube' %}
                         <div class="gallery-video">
                             <iframe 
@@ -69,7 +69,7 @@
                     Registry Verified
                 </span>
                 {% endif %}
-                <span class="badge badge-category-lg">{{ record.category|title }}</span>
+                <span class="badge badge-category-lg">{{ record.item_type|title }}</span>
                 {% if record.featured %}
                 <span class="badge badge-featured">Curator's Choice</span>
                 {% endif %}
@@ -82,7 +82,7 @@
             </div>
             
             <!-- Title -->
-            <h1 class="record-title">{{ record.title }}</h1>
+            <h1 class="record-title">{{ record.name }}</h1>
             
             <!-- Quick Info -->
             <div class="quick-info">
@@ -95,7 +95,7 @@
                 
                 <div class="info-item">
                     <span class="info-label">Esport</span>
-                    <span class="info-value">{{ record.esport|upper }}</span>
+                    <span class="info-value">{{ record.game|upper }}</span>
                 </div>
                 
                 {% if record.team %}
@@ -318,7 +318,7 @@
             <article class="record-card">
                 <a href="/record/{{ rel.id }}" class="record-image">
                     {% if rel.primary_image %}
-                    <img src="{{ rel.primary_image }}" alt="{{ rel.title }}" loading="lazy">
+                    <img src="{{ rel.primary_image }}" alt="{{ rel.name }}" loading="lazy">
                     {% else %}
                     <div class="placeholder-image"></div>
                     {% endif %}
@@ -334,7 +334,7 @@
                     </div>
                     
                     <h3 class="record-title">
-                        <a href="/record/{{ rel.id }}">{{ rel.title }}</a>
+                        <a href="/record/{{ rel.id }}">{{ rel.name }}</a>
                     </h3>
                     
                     <a href="/steward/{{ rel.steward }}" class="record-steward">
@@ -380,7 +380,7 @@ function switchTab(tabName) {
 function shareRecord() {
     if (navigator.share) {
         navigator.share({
-            title: '{{ record.title }} - Esports Museum',
+            title: '{{ record.name }} - Esports Museum',
             url: window.location.href
         });
     } else {

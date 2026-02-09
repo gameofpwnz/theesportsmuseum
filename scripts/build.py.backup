@@ -128,7 +128,7 @@ class MuseumSiteGenerator:
         result['tags'] = json.loads(record['tags']) if record['tags'] else []
         return result
     
-    def get_related_records(self, conn, record_id, game, organization, brand):
+    def get_related_records(self, conn, record_id, esport, team, player):
         """Get related records"""
         cursor = conn.cursor()
         related = cursor.execute("""
@@ -136,10 +136,10 @@ class MuseumSiteGenerator:
                    (SELECT url FROM media WHERE record_id = r.id AND is_primary = 1 LIMIT 1) as primary_image
             FROM records r
             WHERE id != ? 
-            AND (game = ? OR organization = ? OR brand = ?)
+            AND (esport = ? OR team = ? OR player = ?)
             ORDER BY RANDOM()
             LIMIT 4
-        """, (record_id, game or '', organization or '', brand or '')).fetchall()
+        """, (record_id, esport or '', team or '', player or '')).fetchall()
         return [dict(r) for r in related]
     
     def get_steward_info(self, conn, username):
@@ -170,7 +170,7 @@ class MuseumSiteGenerator:
         """).fetchall()
         return [s['steward'] for s in stewards]
     
-    def get_filtered_records(self, conn, item_type='all', game='all', era='all'):
+    def get_filtered_records(self, conn, category='all', esport='all', era='all'):
         """Get filtered records"""
         cursor = conn.cursor()
         
@@ -182,13 +182,13 @@ class MuseumSiteGenerator:
         """
         params = []
         
-        if item_type != 'all':
-            query += " AND item_type = ?"
-            params.append(item_type)
+        if category != 'all':
+            query += " AND category = ?"
+            params.append(category)
         
-        if game != 'all':
-            query += " AND game = ?"
-            params.append(game)
+        if esport != 'all':
+            query += " AND esport = ?"
+            params.append(esport)
         
         if era != 'all':
             if era == 'golden':
@@ -232,8 +232,8 @@ class MuseumSiteGenerator:
         
         template = self.jinja_env.get_template('browse.html')
         
-        item_types = ['all', 'jersey', 'hardware', 'peripheral', 'signature', 'media', 'other']
-        games = ['all', 'Call of Duty', 'Halo', 'Counter-Strike', 'Valorant', 'League of Legends', 'Rocket League']
+        categories = ['all', 'jerseys', 'hardware', 'signatures']
+        esports = ['all', 'cod', 'halo', 'cs', 'valorant', 'lol', 'rl']
         eras = ['all', 'golden', 'global', 'modern']
         
         pages_generated = 0
@@ -241,8 +241,8 @@ class MuseumSiteGenerator:
         # Generate main browse page
         context = {
             'records': self.get_filtered_records(conn),
-            'item_type': 'all',
-            'game': 'all',
+            'category': 'all',
+            'esport': 'all',
             'era': 'all'
         }
         html = template.render(**context)
@@ -250,18 +250,18 @@ class MuseumSiteGenerator:
         pages_generated += 1
         
         # Generate filtered pages
-        for item_type in item_types:
-            for game in games:
+        for category in categories:
+            for esport in esports:
                 for era in eras:
-                    if item_type == 'all' and game == 'all' and era == 'all':
+                    if category == 'all' and esport == 'all' and era == 'all':
                         continue  # Already generated
                     
-                    records = self.get_filtered_records(conn, item_type, game, era)
+                    records = self.get_filtered_records(conn, category, esport, era)
                     
                     context = {
                         'records': records,
-                        'item_type': item_type,
-                        'game': game,
+                        'category': category,
+                        'esport': esport,
                         'era': era
                     }
                     
@@ -269,11 +269,10 @@ class MuseumSiteGenerator:
                     
                     # Create path
                     parts = []
-                    if item_type != 'all':
-                        parts.append(f"type-{item_type}")
-                    if game != 'all':
-                        game_slug = game.lower().replace(' ', '-')
-                        parts.append(f"game-{game_slug}")
+                    if category != 'all':
+                        parts.append(f"category-{category}")
+                    if esport != 'all':
+                        parts.append(f"esport-{esport}")
                     if era != 'all':
                         parts.append(f"era-{era}")
                     
@@ -296,9 +295,9 @@ class MuseumSiteGenerator:
             related = self.get_related_records(
                 conn, 
                 record['id'],
-                record.get('game'),
-                record.get('organization'),
-                record.get('brand')
+                record.get('esport'),
+                record.get('team'),
+                record.get('player')
             )
             
             context = {
@@ -307,7 +306,7 @@ class MuseumSiteGenerator:
             }
             
             html = template.render(**context)
-            self.write_file(f"record/{record['id']}/index.html', html)
+            self.write_file(f"record/{record['id']}/index.html", html)
         
         print(f"✓ Generated {len(records)} record pages")
     
@@ -351,13 +350,13 @@ class MuseumSiteGenerator:
         for record in records:
             search_data.append({
                 'id': record['id'],
-                'name': record['name'],
+                'title': record['title'],
                 'description': record['description'],
-                'item_type': record['item_type'],
-                'game': record['game'],
+                'category': record['category'],
+                'esport': record['esport'],
                 'steward': record['steward'],
-                'organization': record.get('organization'),
-                'brand': record.get('brand'),
+                'team': record.get('team'),
+                'player': record.get('player'),
                 'year': record.get('year'),
                 'primary_image': record.get('primary_image'),
                 'url': f"/record/{record['id']}/"

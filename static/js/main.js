@@ -57,13 +57,13 @@ async function performSearch(query) {
         // Simple client-side search
         const results = searchIndex.filter(record => {
             return (
-                record.title?.toLowerCase().includes(queryLower) ||
+                record.name?.toLowerCase().includes(queryLower) ||
                 record.description?.toLowerCase().includes(queryLower) ||
                 record.steward?.toLowerCase().includes(queryLower) ||
-                record.team?.toLowerCase().includes(queryLower) ||
-                record.player?.toLowerCase().includes(queryLower) ||
+                record.organization?.toLowerCase().includes(queryLower) ||
+                record.brand?.toLowerCase().includes(queryLower) ||
                 record.id?.toLowerCase().includes(queryLower) ||
-                record.esport?.toLowerCase().includes(queryLower)
+                record.game?.toLowerCase().includes(queryLower)
             );
         }).slice(0, 10); // Limit to 10 results
         
@@ -76,13 +76,13 @@ async function performSearch(query) {
         searchResults.innerHTML = results.map(record => `
             <a href="${record.url}" class="search-result-item">
                 ${record.primary_image 
-                    ? `<img src="${record.primary_image}" alt="${record.title}">`
+                    ? `<img src="${record.primary_image}" alt="${record.name}">`
                     : '<div style="width: 60px; height: 60px; background: var(--color-bg-tertiary); border-radius: 4px;"></div>'
                 }
                 <div style="flex: 1;">
-                    <div style="font-weight: 600; margin-bottom: 0.25rem;">${record.title}</div>
+                    <div style="font-weight: 600; margin-bottom: 0.25rem;">${record.name}</div>
                     <div style="font-size: 0.75rem; color: var(--color-text-tertiary);">
-                        ${record.id} • ${record.esport.toUpperCase()}
+                        ${record.id} • ${record.game.toUpperCase()}
                     </div>
                 </div>
             </a>

@@ -59,7 +59,7 @@
             <article class="record-card">
                 <a href="/record/{{ record.id }}" class="record-image">
                     {% if record.primary_image %}
-                    <img src="{{ record.primary_image }}" alt="{{ record.title }}" loading="lazy">
+                    <img src="{{ record.primary_image }}" alt="{{ record.name }}" loading="lazy">
                     {% else %}
                     <div class="placeholder-image"></div>
                     {% endif %}
@@ -71,11 +71,11 @@
                 <div class="record-content">
                     <div class="record-meta">
                         <span class="record-id">{{ record.id }}</span>
-                        <span class="esport-tag">{{ record.esport|upper }}</span>
+                        <span class="esport-tag">{{ record.game|upper }}</span>
                     </div>
                     
                     <h3 class="record-title">
-                        <a href="/record/{{ record.id }}">{{ record.title }}</a>
+                        <a href="/record/{{ record.id }}">{{ record.name }}</a>
                     </h3>
                     
                     {% if record.year %}
