@@ -1,0 +1,88 @@
+[
+  {
+    "id": "CE-001",
+    "name": "OpTic Gaming Championship Jersey - Scump",
+    "organization": "OpTic Gaming",
+    "brand": "PlayerWear",
+    "game": "Call of Duty",
+    "item_type": "jersey",
+    "badges": ["World Champion", "Game-Worn", "Signed"],
+    "year": 2017,
+    "steward": "collector_one",
+    "steward_link": "https://twitter.com/collector_one",
+    "rarity": "ultra_rare",
+    "availability": "in_collection",
+    "condition": "excellent",
+    "chain_of_custody": [
+      {
+        "date": "2017-08",
+        "from": "Seth 'Scump' Abner",
+        "to": "OpTic Gaming",
+        "method": "tournament",
+        "notes": "Worn during CWL Championship 2017 Grand Finals"
+      },
+      {
+        "date": "2020-03",
+        "from": "OpTic Gaming",
+        "to": "Private Collector",
+        "method": "auction",
+        "notes": "Sold at OpTic memorabilia auction"
+      },
+      {
+        "date": "2023-01",
+        "from": "Private Collector",
+        "to": "collector_one",
+        "method": "purchase",
+        "notes": "Acquired through private sale with COA"
+      }
+    ],
+    "description": "Game-worn OpTic Gaming jersey from the 2017 Call of Duty World League Championship Grand Finals. This iconic green jersey was worn by Seth 'Scump' Abner during the match that secured OpTic's first CWL Championship title.",
+    "notes": "Includes original OpTic Gaming certificate of authenticity.",
+    "verified": true,
+    "verification_date": "2024-01-15",
+    "featured": true,
+    "featured_order": 1,
+    "date_added": "2024-01-15",
+    "media": [
+      {
+        "type": "image",
+        "url": "https://collectorsenvy.com/assets/images/museum_images/JERSEY-ATL-SIMP-SIGNED-FRONT.png"
+      },
+      {
+        "type": "youtube",
+        "url": "https://youtu.be/IJyIDgkiHgs"
+      }
+    ]
+  },
+  {
+    "id": "CE-002",
+    "name": "MLG Anaheim 2013 Championship Trophy",
+    "organization": "Major League Gaming",
+    "brand": "Crown Awards",
+    "game": "Call of Duty",
+    "item_type": "hardware",
+    "badges": ["Championship", "Historical"],
+    "year": 2013,
+    "steward": "trophy_hunter",
+    "rarity": "unique",
+    "availability": "in_collection",
+    "condition": "excellent",
+    "chain_of_custody": [
+      {
+        "date": "2013-06",
+        "from": "MLG",
+        "to": "Winning Team",
+        "method": "tournament"
+      }
+    ],
+    "description": "Original championship trophy from MLG Anaheim 2013, one of the most iconic Call of Duty tournaments.",
+    "verified": true,
+    "date_added": "2024-02-01",
+    "media": [
+      {
+        "type": "image",
+        "url": "https://collectorsenvy.com/assets/images/museum_images/JERSEY-ATL-SIMP-SIGNED-FRONT.png"
+      }
+    ]
+  }
+]
