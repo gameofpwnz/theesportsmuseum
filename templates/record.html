@@ -1,0 +1,392 @@
+{% extends "base.html" %}
+
+{% block title %}{{ record.title }} - Esports Collectors Museum{% endblock %}
+
+{% block content %}
+<article class="record-detail">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <a href="/">Home</a>
+        <span>/</span>
+        <a href="/browse?category={{ record.category }}">{{ record.category|title }}</a>
+        <span>/</span>
+        <span>{{ record.id }}</span>
+    </nav>
+    
+    <!-- Main Record Display -->
+    <div class="record-hero">
+        <div class="record-gallery">
+            {% if record.media %}
+                <div class="gallery-main">
+                    {% set primary = record.media|selectattr('is_primary')|first or record.media[0] %}
+                    {% if primary.type == 'image' %}
+                        <img id="mainImage" src="{{ primary.url }}" alt="{{ record.title }}" class="gallery-image">
+                    {% elif primary.type == 'youtube' %}
+                        <div class="gallery-video">
+                            <iframe 
+                                src="https://www.youtube.com/embed/{{ primary.url }}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                {% if record.media|length > 1 %}
+                <div class="gallery-thumbnails">
+                    {% for media in record.media %}
+                        {% if media.type == 'image' %}
+                        <button 
+                            class="thumbnail {% if loop.first %}active{% endif %}" 
+                            onclick="changeImage('{{ media.url }}', this)">
+                            <img src="{{ media.url }}" alt="View {{ loop.index }}">
+                        </button>
+                        {% elif media.type == 'youtube' %}
+                        <button class="thumbnail thumbnail-video" onclick="changeToVideo('{{ media.url }}')">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            {% else %}
+                <div class="gallery-placeholder">No images available</div>
+            {% endif %}
+        </div>
+        
+        <div class="record-info">
+            <!-- Status Badges -->
+            <div class="record-badges">
+                {% if record.verified %}
+                <span class="badge badge-verified-lg">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9 12l2 2 4-4"/>
+                        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Registry Verified
+                </span>
+                {% endif %}
+                <span class="badge badge-category-lg">{{ record.category|title }}</span>
+                {% if record.featured %}
+                <span class="badge badge-featured">Curator's Choice</span>
+                {% endif %}
+            </div>
+            
+            <!-- Registry ID -->
+            <div class="registry-id">
+                <span class="registry-label">Registry No.</span>
+                <span class="registry-number">{{ record.id }}</span>
+            </div>
+            
+            <!-- Title -->
+            <h1 class="record-title">{{ record.title }}</h1>
+            
+            <!-- Quick Info -->
+            <div class="quick-info">
+                {% if record.year %}
+                <div class="info-item">
+                    <span class="info-label">Year</span>
+                    <span class="info-value">{{ record.year }}</span>
+                </div>
+                {% endif %}
+                
+                <div class="info-item">
+                    <span class="info-label">Esport</span>
+                    <span class="info-value">{{ record.esport|upper }}</span>
+                </div>
+                
+                {% if record.team %}
+                <div class="info-item">
+                    <span class="info-label">Team</span>
+                    <span class="info-value">{{ record.team }}</span>
+                </div>
+                {% endif %}
+                
+                {% if record.player %}
+                <div class="info-item">
+                    <span class="info-label">Player</span>
+                    <span class="info-value">{{ record.player }}</span>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Description -->
+            {% if record.description %}
+            <div class="record-description">
+                <h2 class="section-subtitle">Description</h2>
+                <p>{{ record.description }}</p>
+            </div>
+            {% endif %}
+            
+            <!-- Steward Info -->
+            <div class="steward-info">
+                <h2 class="section-subtitle">Steward</h2>
+                <a href="/steward/{{ record.steward }}" class="steward-card">
+                    <div class="steward-avatar">
+                        {{ record.steward[0]|upper }}
+                    </div>
+                    <div class="steward-details">
+                        <span class="steward-name">{{ record.steward }}</span>
+                        <span class="steward-label">Collection Steward</span>
+                    </div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+            
+            <!-- Share Button -->
+            <button class="share-button" onclick="shareRecord()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="18" cy="5" r="3"/>
+                    <circle cx="6" cy="12" r="3"/>
+                    <circle cx="18" cy="19" r="3"/>
+                    <path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/>
+                </svg>
+                Share Record
+            </button>
+        </div>
+    </div>
+    
+    <!-- Detailed Information Tabs -->
+    <div class="record-details">
+        <div class="details-tabs">
+            <button class="tab-button active" onclick="switchTab('provenance')">Provenance</button>
+            <button class="tab-button" onclick="switchTab('physical')">Physical Details</button>
+            {% if record.historical_significance or record.achievement %}
+            <button class="tab-button" onclick="switchTab('historical')">Historical Context</button>
+            {% endif %}
+            {% if record.curator_notes %}
+            <button class="tab-button" onclick="switchTab('curator')">Curator Notes</button>
+            {% endif %}
+        </div>
+        
+        <div class="details-content">
+            <!-- Provenance Tab -->
+            <div class="tab-panel active" id="provenance">
+                <div class="detail-grid">
+                    {% if record.acquisition_date %}
+                    <div class="detail-item">
+                        <span class="detail-label">Acquisition Date</span>
+                        <span class="detail-value">{{ record.acquisition_date }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if record.acquisition_method %}
+                    <div class="detail-item">
+                        <span class="detail-label">Acquisition Method</span>
+                        <span class="detail-value">{{ record.acquisition_method|title }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if record.acquisition_source %}
+                    <div class="detail-item">
+                        <span class="detail-label">Source</span>
+                        <span class="detail-value">{{ record.acquisition_source }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if record.verification_date %}
+                    <div class="detail-item">
+                        <span class="detail-label">Verification Date</span>
+                        <span class="detail-value">{{ record.verification_date }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Added to Archive</span>
+                        <span class="detail-value">{{ record.date_added }}</span>
+                    </div>
+                    
+                    {% if record.view_count %}
+                    <div class="detail-item">
+                        <span class="detail-label">Archive Views</span>
+                        <span class="detail-value">{{ record.view_count }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                {% if record.authenticity_notes %}
+                <div class="detail-notes">
+                    <h3>Authenticity Notes</h3>
+                    <p>{{ record.authenticity_notes }}</p>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Physical Details Tab -->
+            <div class="tab-panel" id="physical">
+                <div class="detail-grid">
+                    {% if record.condition %}
+                    <div class="detail-item">
+                        <span class="detail-label">Condition</span>
+                        <span class="detail-value">{{ record.condition|title }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if record.size %}
+                    <div class="detail-item">
+                        <span class="detail-label">Size</span>
+                        <span class="detail-value">{{ record.size }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if record.material %}
+                    <div class="detail-item">
+                        <span class="detail-label">Material</span>
+                        <span class="detail-value">{{ record.material }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if record.manufacturer %}
+                    <div class="detail-item">
+                        <span class="detail-label">Manufacturer</span>
+                        <span class="detail-value">{{ record.manufacturer }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if record.serial_number %}
+                    <div class="detail-item">
+                        <span class="detail-label">Serial Number</span>
+                        <span class="detail-value">{{ record.serial_number }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if record.market_rarity %}
+                    <div class="detail-item">
+                        <span class="detail-label">Market Rarity</span>
+                        <span class="detail-value">{{ record.market_rarity|replace('_', ' ')|title }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Historical Context Tab -->
+            {% if record.historical_significance or record.achievement %}
+            <div class="tab-panel" id="historical">
+                {% if record.event %}
+                <div class="detail-item">
+                    <span class="detail-label">Event</span>
+                    <span class="detail-value">{{ record.event }}</span>
+                </div>
+                {% endif %}
+                
+                {% if record.season %}
+                <div class="detail-item">
+                    <span class="detail-label">Season</span>
+                    <span class="detail-value">{{ record.season }}</span>
+                </div>
+                {% endif %}
+                
+                {% if record.achievement %}
+                <div class="detail-notes">
+                    <h3>Achievement</h3>
+                    <p>{{ record.achievement }}</p>
+                </div>
+                {% endif %}
+                
+                {% if record.historical_significance %}
+                <div class="detail-notes">
+                    <h3>Historical Significance</h3>
+                    <p>{{ record.historical_significance }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <!-- Curator Notes Tab -->
+            {% if record.curator_notes %}
+            <div class="tab-panel" id="curator">
+                <div class="curator-notes">
+                    {{ record.curator_notes }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Related Records -->
+    {% if related %}
+    <section class="related-section">
+        <h2 class="section-title">Related Records</h2>
+        
+        <div class="related-grid">
+            {% for rel in related %}
+            <article class="record-card">
+                <a href="/record/{{ rel.id }}" class="record-image">
+                    {% if rel.primary_image %}
+                    <img src="{{ rel.primary_image }}" alt="{{ rel.title }}" loading="lazy">
+                    {% else %}
+                    <div class="placeholder-image"></div>
+                    {% endif %}
+                    {% if rel.verified %}
+                    <span class="card-badge">✓</span>
+                    {% endif %}
+                </a>
+                
+                <div class="record-content">
+                    <div class="record-meta">
+                        <span class="record-id">{{ rel.id }}</span>
+                        <span class="esport-tag">{{ rel.esport|upper }}</span>
+                    </div>
+                    
+                    <h3 class="record-title">
+                        <a href="/record/{{ rel.id }}">{{ rel.title }}</a>
+                    </h3>
+                    
+                    <a href="/steward/{{ rel.steward }}" class="record-steward">
+                        @{{ rel.steward }}
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</article>
+
+<script>
+function changeImage(url, element) {
+    document.getElementById('mainImage').src = url;
+    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+    element.classList.add('active');
+}
+
+function changeToVideo(videoId) {
+    const main = document.querySelector('.gallery-main');
+    main.innerHTML = `
+        <div class="gallery-video">
+            <iframe 
+                src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
+    `;
+}
+
+function switchTab(tabName) {
+    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+    
+    event.target.classList.add('active');
+    document.getElementById(tabName).classList.add('active');
+}
+
+function shareRecord() {
+    if (navigator.share) {
+        navigator.share({
+            title: '{{ record.title }} - Esports Museum',
+            url: window.location.href
+        });
+    } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert('Link copied to clipboard!');
+    }
+}
+</script>
+{% endblock %}

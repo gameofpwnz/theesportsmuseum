@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Esports Collectors Museum{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+        <div class="hero-badge">Since 2004</div>
+        <h1 class="hero-title">
+            <span class="hero-title-main">The Archive</span>
+            <span class="hero-title-sub">Preserving Esports History Through Physical Artifacts</span>
+        </h1>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="stat-value">{{ stats.total_records }}</span>
+                <span class="stat-label">Records</span>
+            </div>
+            <div class="hero-stat">
+                <span class="stat-value">{{ stats.total_stewards }}</span>
+                <span class="stat-label">Stewards</span>
+            </div>
+            <div class="hero-stat">
+                <span class="stat-value">{{ "%.0f"|format(stats.verified_percent) }}%</span>
+                <span class="stat-label">Verified</span>
+            </div>
+            <div class="hero-stat">
+                <span class="stat-value">{{ stats.earliest_year }}</span>
+                <span class="stat-label">Earliest</span>
+            </div>
+        </div>
+        <a href="/browse" class="hero-cta">
+            Explore Collection
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </a>
+    </div>
+</section>
+
+<!-- Featured Records -->
+{% if featured %}
+<section class="featured-section">
+    <div class="section-header">
+        <div class="section-badge">Curator's Choice</div>
+        <h2 class="section-title">Essential Records</h2>
+        <p class="section-desc">Museum highlights of exceptional historical significance</p>
+    </div>
+    
+    <div class="featured-grid">
+        {% for record in featured %}
+        <article class="featured-card">
+            <a href="/record/{{ record.id }}" class="featured-image">
+                {% if record.primary_image %}
+                <img src="{{ record.primary_image }}" alt="{{ record.title }}" loading="lazy">
+                {% else %}
+                <div class="placeholder-image"></div>
+                {% endif %}
+                <div class="featured-overlay">
+                    {% if record.verified %}
+                    <span class="badge badge-verified">Verified</span>
+                    {% endif %}
+                    <span class="badge badge-category">{{ record.category|title }}</span>
+                </div>
+            </a>
+            
+            <div class="featured-content">
+                <div class="featured-meta">
+                    <span class="record-id">{{ record.id }}</span>
+                    {% if record.year %}
+                    <span class="record-year">{{ record.year }}</span>
+                    {% endif %}
+                </div>
+                
+                <h3 class="featured-title">
+                    <a href="/record/{{ record.id }}">{{ record.title }}</a>
+                </h3>
+                
+                {% if record.description %}
+                <p class="featured-desc">{{ record.description[:200] }}{% if record.description|length > 200 %}...{% endif %}</p>
+                {% endif %}
+                
+                <div class="featured-footer">
+                    <a href="/steward/{{ record.steward }}" class="steward-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        {{ record.steward }}
+                    </a>
+                    <a href="/record/{{ record.id }}" class="view-link">
+                        View Record →
+                    </a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Recent Additions -->
+<section class="recent-section">
+    <div class="section-header">
+        <h2 class="section-title">Recent Additions</h2>
+        <a href="/browse" class="section-link">View All →</a>
+    </div>
+    
+    <div class="recent-grid">
+        {% for record in recent %}
+        <article class="record-card">
+            <a href="/record/{{ record.id }}" class="record-image">
+                {% if record.primary_image %}
+                <img src="{{ record.primary_image }}" alt="{{ record.title }}" loading="lazy">
+                {% else %}
+                <div class="placeholder-image"></div>
+                {% endif %}
+                {% if record.verified %}
+                <span class="card-badge">✓</span>
+                {% endif %}
+            </a>
+            
+            <div class="record-content">
+                <div class="record-meta">
+                    <span class="record-id">{{ record.id }}</span>
+                    <span class="esport-tag">{{ record.esport|upper }}</span>
+                </div>
+                
+                <h3 class="record-title">
+                    <a href="/record/{{ record.id }}">{{ record.title }}</a>
+                </h3>
+                
+                <a href="/steward/{{ record.steward }}" class="record-steward">
+                    @{{ record.steward }}
+                </a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Quick Categories -->
+<section class="categories-section">
+    <h2 class="section-title">Browse by Category</h2>
+    
+    <div class="categories-grid">
+        <a href="/browse?category=jerseys" class="category-card">
+            <div class="category-icon">🎽</div>
+            <h3 class="category-title">Jerseys</h3>
+            <p class="category-desc">Game-worn apparel from legendary moments</p>
+        </a>
+        
+        <a href="/browse?category=hardware" class="category-card">
+            <div class="category-icon">🏆</div>
+            <h3 class="category-title">Hardware</h3>
+            <p class="category-desc">Trophies, medals, and championship gear</p>
+        </a>
+        
+        <a href="/browse?category=signatures" class="category-card">
+            <div class="category-icon">✍️</div>
+            <h3 class="category-title">Signatures</h3>
+            <p class="category-desc">Autographed memorabilia from esports icons</p>
+        </a>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="cta-content">
+        <h2 class="cta-title">Become a Steward</h2>
+        <p class="cta-desc">
+            Share your collection with the community. Submit records of your esports memorabilia 
+            to preserve gaming history for future generations.
+        </p>
+        <a href="https://forms.gle/hrbaadeGTpLCaeYj7" target="_blank" class="cta-button">
+            Submit Your Records
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </a>
+    </div>
+</section>
+{% endblock %}

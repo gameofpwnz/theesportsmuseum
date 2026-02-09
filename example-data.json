@@ -46,11 +46,7 @@
     "media": [
       {
         "type": "image",
-        "url": "https://collectorsenvy.com/assets/images/museum_images/JERSEY-ATL-SIMP-SIGNED-FRONT.png"
-      },
-      {
-        "type": "youtube",
-        "url": "https://youtu.be/IJyIDgkiHgs"
+        "url": "https://example.com/jersey-front.jpg"
       }
     ]
   },
@@ -81,7 +77,7 @@
     "media": [
       {
         "type": "image",
-        "url": "https://collectorsenvy.com/assets/images/museum_images/JERSEY-ATL-SIMP-SIGNED-FRONT.png"
+        "url": "https://example.com/trophy.jpg"
       }
     ]
   }

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}{{ steward.username }} - Collection Steward{% endblock %}
+
+{% block content %}
+<div class="steward-profile">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-avatar-large">
+            {{ steward.username[0]|upper }}
+        </div>
+        
+        <div class="profile-info">
+            <h1 class="profile-name">{{ steward.display_name or steward.username }}</h1>
+            <div class="profile-meta">
+                <span class="profile-label">Collection Steward</span>
+                {% if steward.verified %}
+                <span class="badge badge-verified">Verified</span>
+                {% endif %}
+            </div>
+            
+            {% if steward.bio %}
+            <p class="profile-bio">{{ steward.bio }}</p>
+            {% endif %}
+            
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-number">{{ records|length }}</span>
+                    <span class="stat-label">Records</span>
+                </div>
+                {% if steward.joined_date %}
+                <div class="stat-item">
+                    <span class="stat-number">{{ steward.joined_date[:4] }}</span>
+                    <span class="stat-label">Member Since</span>
+                </div>
+                {% endif %}
+            </div>
+            
+            {% if steward.social_link %}
+            <a href="{{ steward.social_link }}" target="_blank" class="profile-social">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                </svg>
+                Connect on X
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Collection Grid -->
+    <div class="profile-collection">
+        <h2 class="collection-title">
+            <span>Collection</span>
+            <span class="collection-count">{{ records|length }} records</span>
+        </h2>
+        
+        <div class="collection-grid">
+            {% for record in records %}
+            <article class="record-card">
+                <a href="/record/{{ record.id }}" class="record-image">
+                    {% if record.primary_image %}
+                    <img src="{{ record.primary_image }}" alt="{{ record.title }}" loading="lazy">
+                    {% else %}
+                    <div class="placeholder-image"></div>
+                    {% endif %}
+                    {% if record.verified %}
+                    <span class="card-badge">✓</span>
+                    {% endif %}
+                </a>
+                
+                <div class="record-content">
+                    <div class="record-meta">
+                        <span class="record-id">{{ record.id }}</span>
+                        <span class="esport-tag">{{ record.esport|upper }}</span>
+                    </div>
+                    
+                    <h3 class="record-title">
+                        <a href="/record/{{ record.id }}">{{ record.title }}</a>
+                    </h3>
+                    
+                    {% if record.year %}
+                    <span class="record-year">{{ record.year }}</span>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

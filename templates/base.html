@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Esports Collectors Museum{% endblock %}</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Antonio:wght@300;400;700&family=DM+Sans:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/static/css/main.css">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Sticky Navigation -->
+    <nav class="museum-nav">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-icon">◆</span>
+                <div class="logo-text">
+                    <span class="logo-main">ESPORTS MUSEUM</span>
+                    <span class="logo-sub">Collectors Archive</span>
+                </div>
+            </a>
+            
+            <div class="nav-search">
+                <input 
+                    type="text" 
+                    id="globalSearch" 
+                    placeholder="Search records, players, teams..."
+                    autocomplete="off"
+                >
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+            </div>
+            
+            <div class="nav-links">
+                <a href="/browse/" class="nav-link">Browse</a>
+                <a href="/browse/category-jerseys/" class="nav-link">Jerseys</a>
+                <a href="/browse/category-hardware/" class="nav-link">Hardware</a>
+                <a href="/browse/category-signatures/" class="nav-link">Signatures</a>
+                <a href="/about/" class="nav-link">About</a>
+                <a href="https://forms.gle/hrbaadeGTpLCaeYj7" target="_blank" class="nav-cta">Submit Record</a>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="/browse/" class="mobile-link">Browse All</a>
+            <a href="/browse/category-jerseys/" class="mobile-link">Jerseys</a>
+            <a href="/browse/category-hardware/" class="mobile-link">Hardware</a>
+            <a href="/browse/category-signatures/" class="mobile-link">Signatures</a>
+            <a href="/about/" class="mobile-link">About</a>
+            <a href="https://forms.gle/hrbaadeGTpLCaeYj7" target="_blank" class="mobile-link-cta">Submit Record</a>
+        </div>
+    </nav>
+    
+    <!-- Search Results Dropdown -->
+    <div class="search-results" id="searchResults"></div>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="museum-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="footer-title">Museum</h3>
+                <div class="footer-links">
+                    <a href="/browse/">Browse Collection</a>
+                    <a href="/about/">About the Archive</a>
+                    <a href="https://forms.gle/hrbaadeGTpLCaeYj7" target="_blank">Submit Record</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3 class="footer-title">Categories</h3>
+                <div class="footer-links">
+                    <a href="/browse/category-jerseys/">Jerseys</a>
+                    <a href="/browse/category-hardware/">Hardware</a>
+                    <a href="/browse/category-signatures/">Signatures</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3 class="footer-title">Community</h3>
+                <div class="footer-links">
+                    <a href="https://collectorsenvy.com" target="_blank">Collectors Envy</a>
+                    <a href="https://twitter.com/collectorsenvy" target="_blank">Twitter/X</a>
+                </div>
+            </div>
+            
+            <div class="footer-section footer-sponsors">
+                <h3 class="footer-title">Archive Sponsors</h3>
+                <div class="sponsor-logos">
+                    {% block sponsors %}
+                    <div class="sponsor-logo">
+                        <img src="/static/images/sponsor-placeholder.svg" alt="Sponsor 1">
+                    </div>
+                    <div class="sponsor-logo">
+                        <img src="/static/images/sponsor-placeholder.svg" alt="Sponsor 2">
+                    </div>
+                    <div class="sponsor-logo">
+                        <img src="/static/images/sponsor-placeholder.svg" alt="Sponsor 3">
+                    </div>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Esports Collectors Museum. Preserving the physical legacy of competitive gaming.</p>
+        </div>
+    </footer>
+    
+    <script src="/static/js/main.js"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
