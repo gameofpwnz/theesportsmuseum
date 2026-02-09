@@ -43,7 +43,14 @@ if (globalSearch) {
 // Load search index
 let searchIndex = [];
 
-fetch('/static/search-index.json')
+// Determine base path based on current location
+const getBasePath = () => {
+    const depth = (window.location.pathname.match(/\//g) || []).length - 1;
+    if (depth === 0) return '';
+    return '../'.repeat(depth);
+};
+
+fetch(getBasePath() + 'static/search-index.json')
     .then(response => response.json())
     .then(data => {
         searchIndex = data;
@@ -73,8 +80,11 @@ async function performSearch(query) {
             return;
         }
         
-        searchResults.innerHTML = results.map(record => `
-            <a href="${record.url}" class="search-result-item">
+        searchResults.innerHTML = results.map(record => {
+            const basePath = getBasePath();
+            const recordUrl = basePath + 'record/' + record.id + '/';
+            return `
+            <a href="${recordUrl}" class="search-result-item">
                 ${record.primary_image 
                     ? `<img src="${record.primary_image}" alt="${record.name}">`
                     : '<div style="width: 60px; height: 60px; background: var(--color-bg-tertiary); border-radius: 4px;"></div>'
@@ -86,7 +96,8 @@ async function performSearch(query) {
                     </div>
                 </div>
             </a>
-        `).join('');
+        `;
+        }).join('');
         
         searchResults.classList.add('active');
     } catch (error) {
