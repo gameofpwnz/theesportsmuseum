@@ -12,7 +12,7 @@
     "steward": "collector_one",
     "steward_link": "https://twitter.com/collector_one",
     "rarity": "ultra_rare",
-    "availability": "in_collection",
+    "availability": "Open To Offers",
     "condition": "excellent",
     "chain_of_custody": [
       {
@@ -47,7 +47,11 @@
     "media": [
       {
         "type": "image",
-        "url": "https://example.com/jersey-front.jpg"
+        "url": "https://collectorsenvy.com/assets/images/museum_images/JERSEY-ATL-SIMP-SIGNED-FRONT.png"
+      },
+      {
+        "type": "youtube",
+        "url": "https://youtu.be/IJyIDgkiHgs"
       }
     ]
   },
@@ -63,7 +67,7 @@
     "year": 2013,
     "steward": "trophy_hunter",
     "rarity": "unique",
-    "availability": "in_collection",
+    "availability": "Not For Sale",
     "condition": "excellent",
     "chain_of_custody": [
       {
@@ -79,7 +83,7 @@
     "media": [
       {
         "type": "image",
-        "url": "https://example.com/trophy.jpg"
+        "url": "https://collectorsenvy.com/assets/images/museum_images/JERSEY-ATL-SIMP-SIGNED-FRONT.png"
       }
     ]
   }
